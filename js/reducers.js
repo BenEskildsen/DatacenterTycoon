@@ -34,6 +34,9 @@ const rootReducer = (state, action) => {
 	}
 
 	switch (action.type) {
+		case 'addRack':
+			state.rackCounts[action.rackType - 1] = state.rackCounts[action.rackType - 1] + 1;
+			return state;
     case 'tick':
       return tickReducer(state, action);
 	}
