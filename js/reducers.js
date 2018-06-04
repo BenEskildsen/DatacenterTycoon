@@ -33,20 +33,35 @@ const rootReducer = (state, action) => {
     };
 	}
 
+	const {money, rackCounts} = state;
 	switch (action.type) {
 		case 'addRack':
-			state.rackCounts[action.rackType - 1] = state.rackCounts[action.rackType - 1] + 1;
-			return state;
+			return addRackReducer(state, action);
     case 'tick':
       return tickReducer(state, action);
 	}
+};
+
+const addRackReducer = (state, action) => {
+	const {money, rackCounts} = state;
+	const {rackType} = action;
+	
+	if (RACKS[rackType].price > money) {
+		return state;	
+	}
+	
+	rackCounts[rackType - 1] = rackCounts[rackType - 1] + 1;
+	return {
+		...state,
+		money: money - RACKS[rackType].price,
+	};
 };
 
 const tickReducer = (state, action) => {
   const powerUsed =
   return {
     ...state,
-
+		
     t: t + 1,
   };
 }
