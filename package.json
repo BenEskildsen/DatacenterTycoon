@@ -1,0 +1,32 @@
+{
+  "name": "dc360",
+  "version": "1.0.0",
+  "description": "Climbing: June 2018",
+  "main": "index.js",
+  "bin": {
+    "climbing": "Game.react.js"
+  },
+  "scripts": {
+    "flow": "flow",
+    "babel": "babel",
+    "browserify": "browserify",
+    "start": "python -m SimpleHTTPServer",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ben eskildsen",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "flow-bin": "^0.73.0"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "redux": "^4.0.0"
+  }
+}

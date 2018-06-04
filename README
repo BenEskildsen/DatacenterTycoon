@@ -1,0 +1,16 @@
+DC360: June 2018
+
+compile with
+ > ./compile.bash
+files in js get babelified into bin and then browser-side-required into bundle.js
+
+run with
+ > python -m SimpleHTTPServer
+and then go to localhost:8000 in the browser
+
+clone with
+ > cp template.bash
+installs this project's node dependencies
+ > cp .babelrc
+to get actual babel support *sigh
+and also copy ever the scripts field of package.json

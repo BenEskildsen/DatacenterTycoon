@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  font-family: proxima-nova, Helvetica Neue;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  background: white;
+}
+
+.resume {
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
+  background: #FFF8DC; /* cornsilk */
+  border-radius: 3px;
+  margin: 1.5% 2.5% 2.5%;
+  width: 45%;
+  height: 95%;
+  float: right;
+  color: #484848;
+  font-weight: 700;
+}
+
+.optionDialog {
+  width: 50%;
+  text-align: center;
+  position: absolute;
+}
+
+.dialog {
+  margin-top: 1.5%;
+  padding-bottom: 10px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.option {
+  text-align: center;
+  padding: 15px;
+  margin-left: 25px;
+}
+
+.option:hover {
+  background: lightgrey;
+}
+
+.heading1 {
+  padding-top: 5px;
+  font-size: 25px
+}
+
+.heading2 {
+  font-size: 18px;
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+.heading3 {
+  padding-top: 3px;
+  font-size: 12px;
+  padding-left: 10px;
+}
+
+.heading4 {
+  padding-top: 3px;
+  font-size: 10px;
+  padding-left: 10px;
+}
+
+.left-side-bar {
+  padding: 1.5% 2.5%
+}
+
+h2 {
+  text-align: center;
+}
+
+h3 {
+  padding-left: 15px;
+}
