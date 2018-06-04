@@ -26,7 +26,7 @@ const rootReducer = (state, action) => {
       t: 0,
       money: 1000000,
       powerAvailable: 10000,
-      powerUsed: 0,
+			pricePerKW: 1,
       rackCounts: [1, 0],
       requests: 10, // thousand requests this tick
       incomePerReq: 10, // dollars per thousand requests served
@@ -58,29 +58,40 @@ const addRackReducer = (state, action) => {
 };
 
 const tickReducer = (state, action) => {
-  const powerUsed =
+	const {money, rackCounts, requests, powerAvailable, incomePerReq, t} = state;
+	
+	// compute requests served and power used
+	// either we run out of power, we run out of racks, or we serve all requests
+	let requestsLeft = requests;
+	let power = powerAvailable;
+  rackCounts.forEach((rackTypeCount, rackTypeIndex) => {
+    for (let i = 0; i < rackTypeCount; i++) {
+			const rack = RACKS[rackTypeIndex];
+      requestsLeft -= rack.bandwidth;
+			power -= rack.maxPower;
+			if (power < 0) {
+				if (power > rack.minPower) {
+					requestsLeft += rack.bandwidth * (power - rack.minPower) / (rack.maxPower - rack.minPower);
+				}
+				power = 0;
+				break;
+			}
+			if (requestsLeft < 0) {
+				power += (rack.maxPower - rack.minPower) * (requestsLeft + rack.bandwidth) / rack.bandwidth;
+				requestsLeft = 0;
+				break;
+			}
+    }
+	});
+  const requestsHandled = requests - requestsLeft;
+	const powerUsed = powerAvailable - power;
+	
   return {
     ...state,
-		
-    t: t + 1,
+		t: t + 1,
+		money: money + requestsHandled * incomePerReq - powerUsed * pricePerKW,
+    requests: requests + oneOf([-2, -1, 0, 0, 0, 1, 1, 1, 2]); // random walk the next tick's requests
   };
-}
-
-const requestsHandled = (rackCounts, requests) => {
-  let requestsLeft = requests;
-  rackCounts.forEach((rackTypeCount, rackTypeIndex) => {
-    for (let i = 0; i < rackTypeCount; i++) {
-      requestsLeft -= RACKS[rackTypeIndex].bandwidth;
-    }
-}
-
-const powerNeeded = (rackCounts, requests) => {
-  const totalPowerNeeded = 0;
-  rackCounts.forEach((rackTypeCount, rackTypeIndex) => {
-    for (let i = 0; i < rackTypeCount; i++) {
-      totalPowerNeeded += RACKS[rackTypeIndex].
-    }
-  });
 }
 
 module.exports = {rootReducer};
