@@ -6,9 +6,30 @@ const forEach = (obj, keyValFunc) => {
   }
 }
 
+const shamefulGaussian = () => (random() + random() + random() + random() + random() + random() - 3) / 3;
+
+const randomIn = (min, max) => floor(min + random() * (max - min + 1));
+
+const normalIn = (min, max) => {
+  const gaussian = shamefulGaussian();
+  return floor(min + gaussian * (max - min + 1))
+}
+
 const oneOf = (options) => options[floor(random() * options.length)];
 
+const e = 2.718281828459;
+
+const maybeMinus = (a, b) => a > b ? a - b : a;
+const orZero = (a) => a > 0 ? a : 0;
+const minusToZero = (a, b) => a - b > 0 ? a - b : 0;
+
 module.exports = {
+  e,
   forEach,
+  normalIn,
   oneOf,
+  randomIn,
+  minusToZero,
+  maybeMinus,
+  orZero,
 };
