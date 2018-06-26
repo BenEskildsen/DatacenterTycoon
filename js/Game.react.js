@@ -15,31 +15,41 @@ class Game extends React.Component {
     const {dispatch} = this.props.store;
     const attack = canAttack(player.rigs * 100, crypto.hashRate);
     return (
-      <div className="background">
+      <div className="infoPanels">
         <div className="cryptoPanel">
-          <p>{crypto.name}</p>
-          <p>Coin value: {round(crypto.value * 100) / 100}</p>
-          <p>Coins circulating: {crypto.coins}</p>
-          <p>Hash strength: {crypto.hashStrength} hashes per coin</p>
-          <p>Hash rate of competitors: {crypto.hashRate} kH/s</p>
+          <p style={{textAlign: 'center', marginBottom: '10px'}}><b>{crypto.name} Tycoon</b></p>
+          <p>Coin value ($): <Rhs>{round(crypto.value * 100) / 100}</Rhs></p>
+          <p>Coins circulating: <Rhs>{crypto.coins}</Rhs></p>
+          <p>Hash strength (kH/coin): <Rhs>{crypto.hashStrength}</Rhs></p>
+          <p>Hash rate of competitors (kH/s): <Rhs>{crypto.hashRate}</Rhs></p>
           <button onClick={() => dispatch({type: 'buyCoin'})}>
-            Buy a {crypto.name}
+            Buy
           </button>
           <button onClick={() => dispatch({type: 'sellCoin'})}>
-            {attack ? 'Double spend' : 'Sell'}
+            {attack ? 'Double(!) sell' : 'Sell'}
           </button>
         </div>
         <div className="playerPanel">
-          <p>Money: {round(player.money * 100) / 100}</p>
-          <p>{crypto.name}: {player.coins}</p>
-          <p>Mining: {player.rigs} rigs</p>
-          <p>Hashing power: {player.rigs * 100}kH/s</p>
-          <p>Electricity cost: {player.rigs * 2} $/s</p>
+          <p>{crypto.name}{player.coins == 1 ? '' : 's'}: <Rhs>{player.coins}</Rhs></p>
+          <p>Money ($): <Rhs>{round(player.money * 100) / 100}</Rhs></p>
+          <p>Mining rigs: <Rhs>{player.rigs}</Rhs></p>
+          <p>Hashing power (kH/s): <Rhs>{player.rigs * 100}</Rhs></p>
+          <p>Electricity cost ($/s): <Rhs>{player.rigs * 2}</Rhs></p>
           <button onClick={() => dispatch({type: 'buyRig'})}>
             Buy rig (1k)
           </button>
         </div>
       </div>
+    );
+  }
+}
+
+class Rhs extends React.Component {
+  render() {
+    return (
+      <span className="right">
+        {this.props.children}
+      </span>
     );
   }
 }
