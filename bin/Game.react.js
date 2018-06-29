@@ -17,9 +17,6 @@ var _require = require('./utils'),
 
 var round = Math.round;
 
-var _require2 = require('./reducers'),
-    canAttack = _require2.canAttack;
-
 var Game = function (_React$Component) {
   _inherits(Game, _React$Component);
 
@@ -39,144 +36,27 @@ var Game = function (_React$Component) {
     key: 'render',
     value: function render() {
       var _state = this.state,
-          player = _state.player,
-          crypto = _state.crypto;
+          memory = _state.memory,
+          pointers = _state.pointers;
       var dispatch = this.props.store.dispatch;
 
-      var attack = canAttack(player.rigs * 100, crypto.hashRate);
+      var memoryRows = [];
+      var memoryRow = [];
+      for (var i = 0; i < memory.length; i++) {
+        if (i !== 0 && i % 10 === 0) {
+          memoryRows.push(React.createElement(MemoryRow, { memoryRow: memoryRow, pointers: pointers }));
+          memoryRow = [];
+        }
+        memoryRow.push(memory[i]);
+      }
+      memoryRows.push(React.createElement(MemoryRow, { memoryRow: memoryRow, pointers: pointers }));
       return React.createElement(
         'div',
-        { className: 'infoPanels' },
+        { className: 'background' },
         React.createElement(
           'div',
-          { className: 'cryptoPanel' },
-          React.createElement(
-            'p',
-            { style: { textAlign: 'center', marginBottom: '10px' } },
-            React.createElement(
-              'b',
-              null,
-              crypto.name,
-              ' Tycoon'
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Coin value ($): ',
-            React.createElement(
-              Rhs,
-              null,
-              round(crypto.value * 100) / 100
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Coins circulating: ',
-            React.createElement(
-              Rhs,
-              null,
-              crypto.coins
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Hash strength (kH/coin): ',
-            React.createElement(
-              Rhs,
-              null,
-              crypto.hashStrength
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Hash rate of competitors (kH/s): ',
-            React.createElement(
-              Rhs,
-              null,
-              crypto.hashRate
-            )
-          ),
-          React.createElement(
-            'button',
-            { onClick: function onClick() {
-                return dispatch({ type: 'buyCoin' });
-              } },
-            'Buy'
-          ),
-          React.createElement(
-            'button',
-            { onClick: function onClick() {
-                return dispatch({ type: 'sellCoin' });
-              } },
-            attack ? 'Double(!) sell' : 'Sell'
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'playerPanel' },
-          React.createElement(
-            'p',
-            null,
-            crypto.name,
-            player.coins == 1 ? '' : 's',
-            ': ',
-            React.createElement(
-              Rhs,
-              null,
-              player.coins
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Money ($): ',
-            React.createElement(
-              Rhs,
-              null,
-              round(player.money * 100) / 100
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Mining rigs: ',
-            React.createElement(
-              Rhs,
-              null,
-              player.rigs
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Hashing power (kH/s): ',
-            React.createElement(
-              Rhs,
-              null,
-              player.rigs * 100
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Electricity cost ($/s): ',
-            React.createElement(
-              Rhs,
-              null,
-              player.rigs * 2
-            )
-          ),
-          React.createElement(
-            'button',
-            { onClick: function onClick() {
-                return dispatch({ type: 'buyRig' });
-              } },
-            'Buy rig (1k)'
-          )
+          { className: 'memory' },
+          memoryRows
         )
       );
     }
@@ -185,27 +65,27 @@ var Game = function (_React$Component) {
   return Game;
 }(React.Component);
 
-var Rhs = function (_React$Component2) {
-  _inherits(Rhs, _React$Component2);
+var MemoryRow = function (_React$Component2) {
+  _inherits(MemoryRow, _React$Component2);
 
-  function Rhs() {
-    _classCallCheck(this, Rhs);
+  function MemoryRow() {
+    _classCallCheck(this, MemoryRow);
 
-    return _possibleConstructorReturn(this, (Rhs.__proto__ || Object.getPrototypeOf(Rhs)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (MemoryRow.__proto__ || Object.getPrototypeOf(MemoryRow)).apply(this, arguments));
   }
 
-  _createClass(Rhs, [{
+  _createClass(MemoryRow, [{
     key: 'render',
     value: function render() {
       return React.createElement(
-        'span',
-        { className: 'right' },
-        this.props.children
+        'div',
+        { key: this.props.memoryRow.toString(), className: 'memoryRow' },
+        this.props.memoryRow
       );
     }
   }]);
 
-  return Rhs;
+  return MemoryRow;
 }(React.Component);
 
 module.exports = Game;

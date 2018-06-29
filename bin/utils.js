@@ -40,8 +40,17 @@ var minusToZero = function minusToZero(a, b) {
   return a - b > 0 ? a - b : 0;
 };
 
+var initArray = function initArray(fn, len) {
+  var array = [];
+  for (var i = 0; i < len; i++) {
+    array.push(fn(i));
+  }
+  return array;
+};
+
 module.exports = {
   e: e,
+  initArray: initArray,
   forEach: forEach,
   normalIn: normalIn,
   oneOf: oneOf,

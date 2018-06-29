@@ -23,8 +23,17 @@ const maybeMinus = (a, b) => a > b ? a - b : a;
 const orZero = (a) => a > 0 ? a : 0;
 const minusToZero = (a, b) => a - b > 0 ? a - b : 0;
 
+const initArray = (fn, len) => {
+  const array = [];
+  for (let i = 0; i < len; i++) {
+    array.push(fn(i))
+  }
+  return array;
+}
+
 module.exports = {
   e,
+  initArray,
   forEach,
   normalIn,
   oneOf,

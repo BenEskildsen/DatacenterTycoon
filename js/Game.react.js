@@ -1,7 +1,6 @@
 const React = require('React');
 const {forEach} = require('./utils');
 const {round} = Math;
-const {canAttack} = require('./reducers');
 
 class Game extends React.Component {
   constructor(props) {
@@ -11,45 +10,34 @@ class Game extends React.Component {
   }
 
   render() {
-    const {player, crypto} = this.state;
+    const {memory, pointers} = this.state;
     const {dispatch} = this.props.store;
-    const attack = canAttack(player.rigs * 100, crypto.hashRate);
+    const memoryRows = [];
+    let memoryRow = [];
+    for (let i = 0; i < memory.length; i++) {
+      if (i !== 0 && i % 10 === 0) {
+        memoryRows.push(<MemoryRow memoryRow={memoryRow} pointers={pointers} />);
+        memoryRow = [];
+      }
+      memoryRow.push(memory[i]);
+    }
+    memoryRows.push(<MemoryRow memoryRow={memoryRow} pointers={pointers} />);
     return (
-      <div className="infoPanels">
-        <div className="cryptoPanel">
-          <p style={{textAlign: 'center', marginBottom: '10px'}}><b>{crypto.name} Tycoon</b></p>
-          <p>Coin value ($): <Rhs>{round(crypto.value * 100) / 100}</Rhs></p>
-          <p>Coins circulating: <Rhs>{crypto.coins}</Rhs></p>
-          <p>Hash strength (kH/coin): <Rhs>{crypto.hashStrength}</Rhs></p>
-          <p>Hash rate of competitors (kH/s): <Rhs>{crypto.hashRate}</Rhs></p>
-          <button onClick={() => dispatch({type: 'buyCoin'})}>
-            Buy
-          </button>
-          <button onClick={() => dispatch({type: 'sellCoin'})}>
-            {attack ? 'Double(!) sell' : 'Sell'}
-          </button>
-        </div>
-        <div className="playerPanel">
-          <p>{crypto.name}{player.coins == 1 ? '' : 's'}: <Rhs>{player.coins}</Rhs></p>
-          <p>Money ($): <Rhs>{round(player.money * 100) / 100}</Rhs></p>
-          <p>Mining rigs: <Rhs>{player.rigs}</Rhs></p>
-          <p>Hashing power (kH/s): <Rhs>{player.rigs * 100}</Rhs></p>
-          <p>Electricity cost ($/s): <Rhs>{player.rigs * 2}</Rhs></p>
-          <button onClick={() => dispatch({type: 'buyRig'})}>
-            Buy rig (1k)
-          </button>
+      <div className="background">
+        <div className="memory">
+          {memoryRows}
         </div>
       </div>
     );
   }
 }
 
-class Rhs extends React.Component {
+class MemoryRow extends React.Component {
   render() {
     return (
-      <span className="right">
-        {this.props.children}
-      </span>
+      <div key={this.props.memoryRow.toString()} className="memoryRow">
+        {this.props.memoryRow}
+      </div>
     );
   }
 }

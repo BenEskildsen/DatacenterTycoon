@@ -1,5 +1,6 @@
 #!/bin/bash
-# Copy this file into the directory for your game and then run to get all these node files
+# Copy the entire directoy this file is in as the base for your game.
+# Then run to get all these node files
 # Comment out things you don't need
 
 npm init

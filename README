@@ -1,4 +1,4 @@
-Crypto Tycoon: June 2018
+1 vs 0: July 2018
 
 compile with
  > ./compile.bash
@@ -9,8 +9,11 @@ run with
 and then go to localhost:8000 in the browser
 
 clone with
+ > cp -rf 1vs0/ NEWGAME
+ > sudo rm -rf node_modules
  > cp template.bash
 installs this project's node dependencies
- > cp .babelrc
-to get actual babel support *sigh
-and also copy ever the scripts field of package.json
+make sure you have a
+  .babelrc
+to get actual babel support *sigh*
+and also make sure to have copied over the scripts field of package.json
